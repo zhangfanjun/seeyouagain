@@ -12,6 +12,6 @@ public class DaemonTaskMain {
         t.start();
         System.out.println("后台线程开始执行");
         //通过调节main线程的睡眠时间，就能看到后台线程的打印不同结果
-        TimeUnit.MILLISECONDS.sleep(5);
+        TimeUnit.MILLISECONDS.sleep(1);
     }
 }

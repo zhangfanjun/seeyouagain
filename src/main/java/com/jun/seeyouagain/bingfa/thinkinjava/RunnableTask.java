@@ -27,6 +27,8 @@ public class RunnableTask implements Runnable {
                 TimeUnit.MILLISECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } finally {
+                System.out.println("后台线程中的finally是否被执行");
             }
             Thread.yield();//对线程调度器的一种建议，可以切换上下文到别的线程了
         }
