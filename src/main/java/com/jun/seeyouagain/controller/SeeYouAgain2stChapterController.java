@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequestMapping("")
 @Slf4j
 @Controller
-public class SeeYouAgainSecondChapterController {
+public class SeeYouAgain2stChapterController {
 
     /**
      * 这里使用的Model设置值后会复制到Servlet Response
