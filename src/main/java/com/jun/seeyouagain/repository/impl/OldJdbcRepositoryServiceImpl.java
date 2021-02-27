@@ -18,7 +18,7 @@ import java.util.List;
 @Repository("jdbc")
 public class OldJdbcRepositoryServiceImpl implements IngredientRepositoryService {
 
-    @Resource
+    @Resource(name = "mysqlDataSource")
     private DataSource dataSource;
 
     @Override

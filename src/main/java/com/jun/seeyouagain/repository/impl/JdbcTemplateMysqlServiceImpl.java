@@ -9,15 +9,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
-@Repository("jdbcTemplateRepository")
-public class JdbcTemplateRepositoryServiceImpl implements IngredientRepositoryService {
+@Repository("jdbcTemplateMysql")
+public class JdbcTemplateMysqlServiceImpl implements IngredientRepositoryService {
 
-    @Autowired
+    @Resource(name = "mysqlTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Override
@@ -28,7 +29,7 @@ public class JdbcTemplateRepositoryServiceImpl implements IngredientRepositorySe
 
     @Override
     public Ingredient findById(String id) {
-        //sql语句，映射关系，占位符入参
+        //sql语句，映射关系，占位符入参，这里不用query是因为返回的是一个对象，而不是list
         return jdbcTemplate.queryForObject("select id,name,type from t_ingredient where id=?", this::mapRowToIngredient, id);
     }
 

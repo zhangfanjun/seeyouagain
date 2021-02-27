@@ -24,8 +24,11 @@ public class SeeYouAgain3stChapterController {
     @Resource(name = "jdbc")
     private IngredientRepositoryService jdbcService;
 
-    @Resource(name = "jdbcTemplateRepository")
+    @Resource(name = "jdbcTemplateMysql")
     private IngredientRepositoryService jdbcTemplateService;
+
+    @Resource(name = "jdbcTemplateH2")
+    private IngredientRepositoryService h2Service;
 
     /**
      * 采用jdbc添加数据
@@ -88,6 +91,33 @@ public class SeeYouAgain3stChapterController {
     @PostMapping("/jdbcTemplate/find/all")
     public  ResponseVO<List<Ingredient>> jdbcTemplateFindAll(){
         final List<Ingredient> all = jdbcTemplateService.findAll();
+        return ResponseVO.<List<Ingredient>>builder().code(ResponseVO.CODE_SUCCESS).content(all).build();
+    }
+    /**
+     * 采用H2数据库
+     * */
+    @PostMapping("/h2/jdbcTemplate/add")
+    public ResponseVO<Boolean> h2JdbcTemplateAdd(@RequestBody RequestContent<Ingredient> in){
+        if (Objects.isNull(in.getContent())||null==in.getContent().getId()||null==in.getContent().getType()){
+            log.info("dataAdd null:{}",in);
+            throw new BusinessException("bad param");
+        }
+        log.info("in:{}",in);
+        final boolean save = h2Service.save(in.getContent());
+        return ResponseVO.<Boolean>builder().code(ResponseVO.CODE_SUCCESS).content(save).build();
+    }
+    @PostMapping("/h2/jdbcTemplate/find/id")
+    public ResponseVO<Ingredient> h2JdbcTemplateFindById(@RequestBody RequestContent<BaseIdParam> in){
+        if (null==in.getContent()||null==in.getContent().getId()){
+            log.info("dataAdd null:{}",in);
+            throw new BusinessException("bad param");
+        }
+        final Ingredient ingredient = h2Service.findById(in.getContent().getId());
+        return ResponseVO.<Ingredient>builder().code(ResponseVO.CODE_SUCCESS).content(ingredient).build();
+    }
+    @PostMapping("/h2/jdbcTemplate/find/all")
+    public  ResponseVO<List<Ingredient>> h2JdbcTemplateFindAll(){
+        final List<Ingredient> all = h2Service.findAll();
         return ResponseVO.<List<Ingredient>>builder().code(ResponseVO.CODE_SUCCESS).content(all).build();
     }
 }
