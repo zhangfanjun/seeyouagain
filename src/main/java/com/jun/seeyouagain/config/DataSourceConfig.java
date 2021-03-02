@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
 
@@ -36,6 +37,21 @@ public class DataSourceConfig {
     private String h2DriverClassName;
     @Value("${h2.url}")
     private String h2Url;
+
+
+    @Bean("mysqlTacoOrderInsert")
+    public SimpleJdbcInsert tacoOrderMySqlInsert(){
+        final JdbcTemplate jdbcTemplate = mysqlTemplate();
+        final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order").usingGeneratedKeyColumns("id");
+        return simpleJdbcInsert;
+    }
+
+    @Bean("mysqlTacoOrderTacosInsert")
+    public SimpleJdbcInsert tacoOrderTacosMySqlInsert(){
+        final JdbcTemplate jdbcTemplate = mysqlTemplate();
+        final SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order_Tacos");
+        return simpleJdbcInsert;
+    }
 
     @Bean("mysqlTemplate")
     public JdbcTemplate mysqlTemplate(){

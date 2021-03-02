@@ -1,9 +1,7 @@
 package com.jun.seeyouagain.common.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.sun.istack.internal.NotNull;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +12,10 @@ public class Ingredient {
      * 在这个类中，都采用了常量，
      * 另外在类的内部创建了静态枚举
      * */
+    @NotNull
     private  String id;
+    @Getter
+    @Setter
     private  String name;
     private  Type type;
 

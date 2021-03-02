@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
-@Repository("jdbcTemplateH2")
-public class JdbcTemplateH2ServiceImpl implements IngredientRepositoryService {
+@Repository("jdbcTemplateMysql")
+public class IngredientJdbcTemplateMysqlServiceImpl implements IngredientRepositoryService {
 
-    @Resource(name = "h2Template")
+    @Resource(name = "mysqlTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Override

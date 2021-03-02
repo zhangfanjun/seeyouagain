@@ -2,12 +2,9 @@ package com.jun.seeyouagain.repository.impl;
 
 import com.jun.seeyouagain.common.model.Ingredient;
 import com.jun.seeyouagain.repository.IngredientRepositoryService;
-import com.sun.el.parser.AstFalse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.ResultSet;
@@ -15,10 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
-@Repository("jdbcTemplateMysql")
-public class JdbcTemplateMysqlServiceImpl implements IngredientRepositoryService {
+@Repository("jdbcTemplateH2")
+public class IngredientJdbcTemplateH2ServiceImpl implements IngredientRepositoryService {
 
-    @Resource(name = "mysqlTemplate")
+    @Resource(name = "h2Template")
     private JdbcTemplate jdbcTemplate;
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Repository("jdbc")
-public class OldJdbcRepositoryServiceImpl implements IngredientRepositoryService {
+public class IngredientOldJdbcServiceImpl implements IngredientRepositoryService {
 
     @Resource(name = "mysqlDataSource")
     private DataSource dataSource;
