@@ -8,12 +8,14 @@ import com.jun.seeyouagain.common.model.param.BaseIdParam;
 import com.jun.seeyouagain.common.model.param.RequestContent;
 import com.jun.seeyouagain.common.model.vo.ResponseVO;
 import com.jun.seeyouagain.repository.IngredientRepositoryService;
+import com.jun.seeyouagain.repository.OrderRepositoryService;
 import com.jun.seeyouagain.repository.TacoRepositoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -185,6 +187,27 @@ public class SeeYouAgain3stChapterController {
                 .stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
+    }
+
+    @Autowired
+    private OrderRepositoryService orderRepositoryService;
+
+    @GetMapping("/current")
+    public String orderForm() {
+        return "orderForm";
+    }
+
+    @PostMapping
+    public String processOrder(@Valid Order order, Errors errors,
+                               SessionStatus sessionStatus) {
+        if (errors.hasErrors()) {
+            return "orderForm";
+        }
+
+        orderRepositoryService.save(order);
+        sessionStatus.setComplete();
+
+        return "redirect:/";
     }
 
 }
