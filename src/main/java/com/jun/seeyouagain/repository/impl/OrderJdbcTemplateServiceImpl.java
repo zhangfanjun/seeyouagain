@@ -3,12 +3,14 @@ package com.jun.seeyouagain.repository.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jun.seeyouagain.common.model.Order;
 import com.jun.seeyouagain.common.model.Taco;
+import com.jun.seeyouagain.common.util.SpringBeanUtil;
 import com.jun.seeyouagain.repository.OrderRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +23,10 @@ public class OrderJdbcTemplateServiceImpl implements OrderRepositoryService {
     private SimpleJdbcInsert orderTacoInserter;
     private ObjectMapper objectMapper;
 
-    @Autowired
-    public OrderJdbcTemplateServiceImpl(JdbcTemplate jdbc) {
+    @Resource(name = "mysqlTemplate")
+    private JdbcTemplate jdbc;
+
+    public void getInsert() {
         this.orderInserter = new SimpleJdbcInsert(jdbc)
                 .withTableName("Taco_Order")
                 .usingGeneratedKeyColumns("id");
@@ -35,6 +39,7 @@ public class OrderJdbcTemplateServiceImpl implements OrderRepositoryService {
 
     @Override
     public Order save(Order order) {
+        getInsert();
         order.setPlacedAt(new Date());
         long orderId = saveOrderDetails(order);
         order.setId(orderId);
